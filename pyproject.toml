@@ -3,11 +3,11 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "emage"
-version = "0.1.0"
+name = "embher"
+version = "0.1.1"
 description = "Exact REML / Haseman-Elston heritability estimation, GRM construction and embedding whitening"
 requires-python = ">=3.9"
 dependencies = ["numpy", "pandas", "scipy"]
 
 [tool.setuptools]
-packages = ["emage"]
+packages = ["embher"]

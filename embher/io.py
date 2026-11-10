@@ -1,7 +1,7 @@
 """Read a PLINK 1 .bed into a donor x variant dosage matrix (numpy, no plink call).
 
 Genotype reader for per-donor allele counts from a PLINK bfile. Import it as
-`from emage.io import read_bed` (or `from emage import read_bed`).
+`from embher.io import read_bed` (or `from embher import read_bed`).
 """
 from __future__ import annotations
 
