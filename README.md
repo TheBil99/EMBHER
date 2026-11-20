@@ -22,4 +22,4 @@ Requires Python >= 3.9, numpy, pandas, scipy.
 
 ## Paper
 
-The analyses that reproduce the paper's results live in a separate analysis repository.
+The analyses that reproduce the paper's results live in the `embher_analysis` repository.
