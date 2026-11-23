@@ -21,6 +21,8 @@ dependencies = ["numpy", "pandas", "scipy", "pyarrow", "pysam", "pyyaml", "tqdm"
 [project.optional-dependencies]
 # Borzoi/Flashzoi forward passes (embher-capture --model_type borzoi)
 capture-borzoi = ["torch", "borzoi-pytorch"]
+# Enformer forward passes (embher.embedding.backends)
+capture-enformer = ["torch", "enformer-pytorch"]
 # AlphaGenome forward passes. jax, haiku, orbax, jmp and alphagenome_research are also
 # needed; alphagenome_research is not on PyPI (github.com/google-deepmind/alphagenome_research).
 # Keep it in its own environment: the jax and torch stacks are disjoint.
@@ -29,9 +31,11 @@ capture-alphagenome = ["alphagenome"]
 attribution = ["embher[capture-borzoi]", "captum", "tangermeme", "decima", "pyBigWig"]
 dev = ["pytest", "pytest-cov"]
 # Everything except AlphaGenome
-all = ["embher[capture-borzoi,attribution,dev]"]
+all = ["embher[capture-borzoi,capture-enformer,attribution,dev]"]
 
 [project.scripts]
+embher-h2 = "embher.cli.h2:main"
+embher-kernel = "embher.cli.kernel:main"
 embher-capture = "embher.embedding.cli.capture_forward:main"
 embher-attribute = "embher.embedding.cli.attribute_layers:main"
 embher-inspect-h5 = "embher.embedding.cli.inspect_h5:main"
