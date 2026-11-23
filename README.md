@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo.png" width="220" alt="embher"></p>
+
 # embher
 
 Two parts, installable separately:
@@ -28,6 +30,8 @@ Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[captur
 Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
 
 ## Example
+
+![embher schematic](docs/schematic.png)
 
 [`examples/heritability_and_embedding_demo.ipynb`](examples/heritability_and_embedding_demo.ipynb) runs on simulated data with the base install, no weights and no GPU: genotype heritability by REML and HE, then an embedding whitened and used as a kernel. A flag swaps the simulated embedding for Borzoi's (needs `capture-borzoi` and a GPU).
 
@@ -71,6 +75,10 @@ The framework for loading personal genomes (`GenomeDataset`, `CoordinateTransfor
 
 > Xinming Tu, Anna Spiro, Maria Chikina, Sara Mostafavi. *A modality gap in personal-genome prediction by sequence-to-function model.* bioRxiv (2026). [Preprint](https://www.biorxiv.org/content/10.64898/2026.02.01.702969v1)
 
-## Paper
+## Citation
 
-The analyses that reproduce the paper's results live in the `embher_analysis` repository.
+If you use EMBHER, please cite:
+
+> Federico Billeci, Miquel Anglada-Girotto, Alexander Gusev, Jonathan Frazer & Mafalda Dias. *Sequence-to-function embeddings across individuals capture rare and common variant heritability.* bioRxiv (forthcoming; DOI to be added).
+
+The full analysis pipeline of the manuscript is at [TheBil99/EMBHER_publication](https://github.com/TheBil99/EMBHER_publication).
