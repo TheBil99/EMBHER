@@ -64,3 +64,21 @@ def whiten_embeddings(Z, n_pcs=None, pc_frac=None, verbose=True):
     # would otherwise weight this direction in K.
     scores = U[:, :k] * np.sqrt(n)
     return scores
+
+
+def embedding_kernel(Z, n_pcs=None, pc_frac=0.7, whiten=True, verbose=False):
+    """Relatedness kernel of a donors x features embedding. Returns (K, k).
+
+    whiten=True (default): K = W W' / k with W the top-k whitened PC scores (`whiten_embeddings`;
+    k = n_pcs, or pc_frac of the numerical rank, 70% by default as in the paper).
+    whiten=False: K = Z Z' / M on the column-standardised features (zero-variance ones dropped).
+    This is what a genotype-style GRM would do; for redundant embedding features it gives a kernel
+    with a very wide eigenvalue spectrum and can inflate h2, so prefer whitening."""
+    Z = np.asarray(Z, dtype=np.float64)
+    if whiten:
+        W = whiten_embeddings(Z, n_pcs=n_pcs, pc_frac=None if n_pcs is not None else pc_frac, verbose=verbose)
+        return W @ W.T / W.shape[1], W.shape[1]
+    sd = Z.std(axis=0)
+    keep = sd > 0
+    X = (Z[:, keep] - Z[:, keep].mean(axis=0)) / sd[keep]
+    return X @ X.T / X.shape[1], int(X.shape[1])
