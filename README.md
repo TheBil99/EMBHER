@@ -8,29 +8,28 @@ Two parts, installable separately:
 ## Install
 
 ```bash
-pip install "embher[heritability] @ git+ssh://git@github.com/TheBil99/EMBHER.git"   # numpy, pandas, scipy only
-pip install "embher[embedding]    @ git+ssh://git@github.com/TheBil99/EMBHER.git"   # embedding tools, no model
-pip install "embher[borzoi]       @ git+ssh://git@github.com/TheBil99/EMBHER.git"   # + Borzoi/Flashzoi capture
-pip install "embher[attribution]  @ git+ssh://git@github.com/TheBil99/EMBHER.git"   # + attribution (implies borzoi)
-pip install "embher[alphagenome]  @ git+ssh://git@github.com/TheBil99/EMBHER.git"   # + AlphaGenome capture
+pip install "embher @ git+ssh://git@github.com/TheBil99/EMBHER.git"                         # heritability + embedding tools
+pip install "embher[capture-borzoi] @ git+ssh://git@github.com/TheBil99/EMBHER.git"         # + Borzoi/Flashzoi capture
+pip install "embher[attribution] @ git+ssh://git@github.com/TheBil99/EMBHER.git"            # + attribution (implies capture-borzoi)
+pip install "embher[capture-alphagenome] @ git+ssh://git@github.com/TheBil99/EMBHER.git"    # + AlphaGenome capture
 ```
 
-Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[heritability,borzoi]`.
+Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[capture-borzoi,attribution]`.
 
-| Extra | Adds |
+| Install | Adds |
 |---|---|
-| (none) / `heritability` | numpy, pandas, scipy |
-| `embedding` | pyarrow, pysam, pyyaml, tqdm, h5py, ml_dtypes, numba |
-| `borzoi` | `embedding` + torch, borzoi-pytorch |
-| `alphagenome` | `embedding` + alphagenome (also jax, haiku, orbax, jmp and [alphagenome_research](https://github.com/google-deepmind/alphagenome_research), not on PyPI) |
-| `attribution` | `borzoi` + captum, tangermeme, decima, pyBigWig |
-| `dev` | pytest, pytest-cov |
+| `embher` | numpy, pandas, scipy, pyarrow, pysam, pyyaml, tqdm, h5py, ml_dtypes, numba |
+| `embher[capture-borzoi]` | torch, borzoi-pytorch |
+| `embher[capture-alphagenome]` | alphagenome (also jax, haiku, orbax, jmp and [alphagenome_research](https://github.com/google-deepmind/alphagenome_research), not on PyPI) |
+| `embher[attribution]` | `capture-borzoi` + captum, tangermeme, decima, pyBigWig |
+| `embher[all]` | `capture-borzoi`, `attribution` and `dev` (not AlphaGenome) |
+| `embher[dev]` | pytest, pytest-cov |
 
-Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless `--weights_path` is given; AlphaGenome needs a local checkpoint.
+Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
 
 ## Example
 
-[`examples/heritability_and_embedding_demo.ipynb`](examples/heritability_and_embedding_demo.ipynb) runs on simulated data, with no model weights and no GPU: genotype heritability by REML and HE, then an embedding whitened and used as a kernel.
+[`examples/heritability_and_embedding_demo.ipynb`](examples/heritability_and_embedding_demo.ipynb) runs on simulated data with the base install, no weights and no GPU: genotype heritability by REML and HE, then an embedding whitened and used as a kernel. A flag swaps the simulated embedding for Borzoi's (needs `capture-borzoi` and a GPU).
 
 ## Modules
 
@@ -46,16 +45,16 @@ Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch 
 | `embher.embedding.attribution` | layer-wise attribution of Borzoi windows |
 | `embher.embedding.utils` | gene metadata, VCF samples, coordinates, Borzoi helpers, device selection |
 
-The most used `heritability` functions are re-exported: `from embher.heritability import fit_reml, he_fit, build_grm, read_bed`. `heritability`, `embedding.whiten` and `embedding.utils.coordinates` import without torch.
+The most used `heritability` functions are re-exported: `from embher.heritability import fit_reml, he_fit, build_grm, read_bed`. The base install has no torch: `heritability`, `embedding.whiten` and `embedding.utils.coordinates` import without it.
 
 ## Command-line tools (`embher.embedding.cli`)
 
 | Command | Needs | Purpose |
 |---|---|---|
-| `embher-capture` | `borzoi` or `alphagenome` | write every intermediate and final tensor of a forward pass to HDF5 |
+| `embher-capture` | `capture-borzoi` or `capture-alphagenome` | write every intermediate and final tensor of a forward pass to HDF5 |
 | `embher-attribute` | `attribution` | attribute the L2 norm of each captured layer back to the input bases (Captum input x gradient) |
-| `embher-inspect-h5` | `embedding` | check a capture file |
-| `embher-prepare-gene-meta` | `embedding` | build the gene table `embher-capture` needs from a GENCODE parquet |
+| `embher-inspect-h5` | base install | check a capture file |
+| `embher-prepare-gene-meta` | base install | build the gene table `embher-capture` needs from a GENCODE parquet |
 
 ```bash
 embher-capture --model_type borzoi \

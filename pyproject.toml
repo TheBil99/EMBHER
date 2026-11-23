@@ -13,24 +13,23 @@ authors = [
     {name = "Miquel Anglada-Girotto"},
     {name = "Xinming Tu"},
 ]
-# Core = what embher.heritability needs.
-dependencies = ["numpy", "pandas", "scipy"]
+# Core = both parts' basic tools: heritability (numpy, pandas, scipy) and the embedding
+# tools that need no model (whitening, gene metadata, regions/reductions, HDF5 reading and
+# inspection). No torch, no jax.
+dependencies = ["numpy", "pandas", "scipy", "pyarrow", "pysam", "pyyaml", "tqdm", "h5py", "ml_dtypes", "numba"]
 
 [project.optional-dependencies]
-# pip install embher[heritability]: same as the bare install, spelled out
-heritability = []
-# pip install embher[embedding]: the embedding tools that need no model (whitening, gene
-# metadata, regions/reductions, HDF5 reading and inspection); no torch, no jax
-embedding = ["pyarrow", "pysam", "pyyaml", "tqdm", "h5py", "ml_dtypes", "numba"]
-# + Borzoi/Flashzoi forward passes
-borzoi = ["embher[embedding]", "torch", "borzoi-pytorch"]
-# + AlphaGenome forward passes. jax, haiku, orbax, jmp and alphagenome_research are also
-# needed; alphagenome_research is not on PyPI (github.com/google-deepmind/alphagenome_research)
-alphagenome = ["embher[embedding]", "alphagenome"]
-# + attribution (Borzoi only)
-attribution = ["embher[borzoi]", "captum", "tangermeme", "decima", "pyBigWig"]
+# Borzoi/Flashzoi forward passes (embher-capture --model_type borzoi)
+capture-borzoi = ["torch", "borzoi-pytorch"]
+# AlphaGenome forward passes. jax, haiku, orbax, jmp and alphagenome_research are also
+# needed; alphagenome_research is not on PyPI (github.com/google-deepmind/alphagenome_research).
+# Keep it in its own environment: the jax and torch stacks are disjoint.
+capture-alphagenome = ["alphagenome"]
+# Attribution (Borzoi only)
+attribution = ["embher[capture-borzoi]", "captum", "tangermeme", "decima", "pyBigWig"]
 dev = ["pytest", "pytest-cov"]
-all = ["embher[heritability,embedding,borzoi,attribution,dev]"]
+# Everything except AlphaGenome
+all = ["embher[capture-borzoi,attribution,dev]"]
 
 [project.scripts]
 embher-capture = "embher.embedding.cli.capture_forward:main"
