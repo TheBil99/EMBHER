@@ -4,10 +4,44 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "embher"
-version = "0.1.1"
-description = "Exact REML / Haseman-Elston heritability estimation, GRM construction and embedding whitening"
-requires-python = ">=3.9"
+version = "0.2.0"
+description = "Heritability estimation from kernels (exact REML, Haseman-Elston) and embedding capture, attribution and whitening for sequence-to-function models"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Miquel Anglada-Girotto"},
+    {name = "Xinming Tu"},
+]
+# Core = what embher.heritability needs.
 dependencies = ["numpy", "pandas", "scipy"]
 
-[tool.setuptools]
-packages = ["embher"]
+[project.optional-dependencies]
+# pip install embher[heritability]: same as the bare install, spelled out
+heritability = []
+# pip install embher[embedding]: the embedding tools that need no model (whitening, gene
+# metadata, regions/reductions, HDF5 reading and inspection); no torch, no jax
+embedding = ["pyarrow", "pysam", "pyyaml", "tqdm", "h5py", "ml_dtypes", "numba"]
+# + Borzoi/Flashzoi forward passes
+borzoi = ["embher[embedding]", "torch", "borzoi-pytorch"]
+# + AlphaGenome forward passes. jax, haiku, orbax, jmp and alphagenome_research are also
+# needed; alphagenome_research is not on PyPI (github.com/google-deepmind/alphagenome_research)
+alphagenome = ["embher[embedding]", "alphagenome"]
+# + attribution (Borzoi only)
+attribution = ["embher[borzoi]", "captum", "tangermeme", "decima", "pyBigWig"]
+dev = ["pytest", "pytest-cov"]
+all = ["embher[heritability,embedding,borzoi,attribution,dev]"]
+
+[project.scripts]
+embher-capture = "embher.embedding.cli.capture_forward:main"
+embher-attribute = "embher.embedding.cli.attribute_layers:main"
+embher-inspect-h5 = "embher.embedding.cli.inspect_h5:main"
+embher-prepare-gene-meta = "embher.embedding.cli.prepare_gene_meta:main"
+
+[tool.setuptools.packages.find]
+include = ["embher*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v"
