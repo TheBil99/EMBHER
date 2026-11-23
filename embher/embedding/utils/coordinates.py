@@ -22,6 +22,9 @@ class CoordinateTransformer:
         >>> # After deletion of 5bp at position 100
         >>> t = CoordinateTransformer([(0, 0), (100, -5)])
         >>> t.ref_to_personal(150)  # Returns 145
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/coordinates.py#L14
     """
     shift_points: List[Tuple[int, int]] = field(default_factory=list)
     # Each tuple: (ref_position, cumulative_shift_after_this_position)

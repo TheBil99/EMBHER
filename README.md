@@ -28,6 +28,10 @@ Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[herita
 
 Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless `--weights_path` is given; AlphaGenome needs a local checkpoint.
 
+## Example
+
+[`examples/heritability_and_embedding_demo.ipynb`](examples/heritability_and_embedding_demo.ipynb) runs on simulated data, with no model weights and no GPU: genotype heritability by REML and HE, then an embedding whitened and used as a kernel.
+
 ## Modules
 
 | Module | Contents |
@@ -64,12 +68,9 @@ embher-capture --model_type borzoi \
 
 ## Acknowledgements
 
-The embedding part is derived from [alphagenome-personal-eval](https://github.com/mostafavilabuw/alphagenome-personal-eval) by Xinming Tu, Anna Spiro, Maria Chikina and Sara Mostafavi (Mostafavi lab, University of Washington): the personal-genome dataset, the Borzoi/AlphaGenome utilities and the capture framework originate there. The inference and PrediXcan evaluation code was removed, and attribution, single-variant capture, random initialisation and `--embedding_layers` were added. It is released under the original MIT licence, which keeps the original copyright notice (see [LICENSE](LICENSE)).
+The framework for loading personal genomes (`GenomeDataset`, `CoordinateTransformer` and the Borzoi helpers) comes from [alphagenome-personal-eval](https://github.com/mostafavilabuw/alphagenome-personal-eval) (Tu et al., Mostafavi lab). Adapted code says so in its docstring. Please cite their work if you use it:
 
-If you use this code just for forward passes and not embedding extraction or attribution analysis, please cite the original work:
-
-> **A modality gap in personal-genome prediction by sequence-to-function model**
-> Xinming Tu, Anna Spiro, Maria Chikina, and Sara Mostafavi. bioRxiv (2026). [Preprint](https://www.biorxiv.org/content/10.64898/2026.02.01.702969v1)
+> Xinming Tu, Anna Spiro, Maria Chikina, Sara Mostafavi. *A modality gap in personal-genome prediction by sequence-to-function model.* bioRxiv (2026). [Preprint](https://www.biorxiv.org/content/10.64898/2026.02.01.702969v1)
 
 ## Paper
 

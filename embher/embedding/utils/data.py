@@ -68,6 +68,9 @@ def load_vcf_samples(vcf_path: Union[str, Path]) -> List[str]:
     Example:
         >>> samples = load_vcf_samples('data.vcf.gz')
         >>> print(f"VCF contains {len(samples)} samples")
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/data.py#L496
     """
     vcf_path = Path(vcf_path)
 
@@ -129,6 +132,9 @@ def create_genome_dataset(
         ...     window_size=100000
         ... )
         >>> seq, expr, _, idx = dataset[0]
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/data.py#L568
     """
     from embher.embedding.dataset import GenomeDataset
 

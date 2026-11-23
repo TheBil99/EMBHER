@@ -30,6 +30,9 @@ def load_yaml_config(config_path: str) -> Dict:
     Raises:
         FileNotFoundError: If config file doesn't exist
         yaml.YAMLError: If YAML parsing fails
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/scripts/cli_utils.py#L21
     """
     config_path = Path(config_path)
 
@@ -61,6 +64,9 @@ def merge_configs(yaml_config: Optional[Dict], cli_args: Dict) -> Dict:
 
     Returns:
         Merged configuration dictionary
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/scripts/cli_utils.py#L55
     """
     # Start with YAML config or empty dict
     merged = yaml_config.copy() if yaml_config else {}
@@ -83,6 +89,9 @@ def setup_logging(verbose: bool = False, log_file: Optional[str] = None) -> logg
 
     Returns:
         Configured logger instance
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/scripts/cli_utils.py#L79
     """
     level = logging.DEBUG if verbose else logging.INFO
 
@@ -122,6 +131,9 @@ def print_config_summary(config: Dict, title: str = "Configuration") -> None:
     Args:
         config: Configuration dictionary to print
         title: Title for the summary
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/scripts/cli_utils.py#L121
     """
     print("\n" + "=" * 70)
     print(f"  {title}")

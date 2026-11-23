@@ -8,6 +8,9 @@ from embher.embedding.utils.coordinates import CoordinateTransformer
 
 
 class GenomeDataset:
+    """Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/PersonalDataset.py#L9
+    """
     def __init__(
         self,
         gene_metadata: pd.DataFrame,

@@ -65,6 +65,9 @@ def _onehot_encoding_numba(sequence: str, alphabet: str = "ACGT",
         
     Returns:
         Tensor of shape (len(alphabet), len(sequence))
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L71
     """
     if not HAS_NUMBA:
         raise ImportError("numba is required for fast one-hot encoding. "
@@ -156,6 +159,9 @@ def get_model_name(
         'johahi/borzoi-replicate-0'
         >>> get_model_name(0, use_flashzoi=True)
         'johahi/flashzoi-replicate-0'
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L193
     """
     if replicate not in range(4):
         raise ValueError(f"replicate must be 0-3, got {replicate}")
@@ -241,6 +247,9 @@ def init_borzoi_model(
         Performance comparison (on NVIDIA RTX A4000):
         - Standard Borzoi: ~0.24s per inference, ~3.5 GB memory
         - Flashzoi: ~0.15s per inference, ~2.9 GB memory
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L221
     """
     if AnnotatedBorzoi is None:
         raise ImportError("borzoi_pytorch not installed. Please install it to use Borzoi models.")
@@ -302,6 +311,9 @@ def _init_borzoi_random(
 
     Returns:
         Tuple of (model, tracks_df)
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L318
     """
     from borzoi_pytorch.config_borzoi import BorzoiConfig
 
@@ -354,6 +366,9 @@ def dna_to_onehot(
         
     Raises:
         ImportError: If numba is not installed
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L367
     """
     if not HAS_NUMBA:
         raise ImportError("numba is required for one-hot encoding. "
@@ -390,6 +405,9 @@ def get_borzoi_track_indices(
 
     Returns:
         List of track indices
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/borzoi_utils.py#L465
     """
     if tracks_df is None:
         return []

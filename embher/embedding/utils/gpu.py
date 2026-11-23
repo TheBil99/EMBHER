@@ -36,6 +36,9 @@ def get_best_gpu() -> Optional[int]:
         >>> gpu_id = get_best_gpu()
         >>> if gpu_id is not None:
         ...     torch.cuda.set_device(gpu_id)
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/gpu.py#L21
     """
     try:
         result = subprocess.run(
@@ -93,6 +96,9 @@ def select_device(prefer_cuda: bool = True) -> str:
         
         >>> model = model.to(device)
         >>> tensor = tensor.to(device)
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/gpu.py#L86
     """
     if not prefer_cuda:
         return 'cpu'
@@ -122,6 +128,9 @@ def get_device_info() -> dict:
     Example:
         >>> info = get_device_info()
         >>> print(f"GPUs: {info['gpu_count']}, Best: {info['best_gpu']}")
+
+    Adapted from alphagenome-personal-eval (Tu et al.):
+    https://github.com/mostafavilabuw/alphagenome-personal-eval/blob/b1ca0d4fa1eb74ee9848367e89a0e8ca65425fc6/src/alphagenome_eval/utils/gpu.py#L125
     """
     cuda_available = torch.cuda.is_available()
     gpu_count = torch.cuda.device_count() if cuda_available else 0
