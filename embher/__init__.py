@@ -1,2 +1,3 @@
-"""EREML: exact REML and Haseman-Elston heritability estimation, GRM construction, PLINK genotype reading and PCA whitening."""
-from .io import read_bed
+"""EMBHER: heritability estimation from kernels (`embher.heritability`) and embedding capture,
+attribution and whitening for sequence-to-function models (`embher.embedding`)."""
+__version__ = "0.2.0"
