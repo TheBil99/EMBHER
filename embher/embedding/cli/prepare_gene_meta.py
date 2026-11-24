@@ -8,7 +8,7 @@ bare ('22', not 'chr22') because PersonalDataset re-adds the prefix itself
 via --contig_prefix (VCF) and genome_contig_prefix (FASTA).
 
 Usage:
-    python tmp/scripts/prepare_gene_meta.py --chrom 22 --out tmp/data/genes_chr22.tsv
+    embher-prepare-gene-meta --gencode gencode.v46.annotation.gtf.parquet --chrom 22 --out genes_chr22.tsv
 """
 
 import argparse
@@ -16,15 +16,10 @@ from pathlib import Path
 
 import pandas as pd
 
-GENCODE_PARQUET = (
-    'data/GENCODE/release_46/'
-    'gencode.v46.annotation.gtf.parquet'
-)
-
-
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument('--gencode', default=GENCODE_PARQUET)
+    p.add_argument('--gencode', required=True,
+                   help='GENCODE v46 annotation as a pyranges-style parquet')
     p.add_argument('--chrom', nargs='+', default=['22'],
                    help="Chromosomes to keep, bare names e.g. 22 21 (default: 22)")
     p.add_argument('--gene_type', default='protein_coding',

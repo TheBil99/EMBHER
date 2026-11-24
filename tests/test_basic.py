@@ -1,4 +1,5 @@
 """Import smoke tests."""
+import pytest
 
 
 def test_heritability_and_whiten_are_torch_free():
@@ -20,10 +21,16 @@ def test_import_package():
 
 
 def test_utils_exports_used_by_capture_forward():
+    # borzoi_utils imports torch and borzoi_pytorch at module level: needs the capture-borzoi extra
+    pytest.importorskip("torch")
+    pytest.importorskip("borzoi_pytorch")
     from embher.embedding.utils import (  # noqa: F401
         BORZOI_SEQ_LEN, create_genome_dataset, get_borzoi_track_indices,
         init_borzoi_model, load_gene_metadata, load_vcf_samples,
     )
+
+
+def test_sequence_lengths():
     from embher.embedding.capture.regions import SEQUENCE_LENGTHS
     assert SEQUENCE_LENGTHS["1MB"] == 1048576
 
