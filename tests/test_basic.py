@@ -39,4 +39,10 @@ def test_capture_and_attribution_modules_import():
     from embher.embedding.capture import alphagenome, reduce, regions  # noqa: F401  (jax is imported lazily)
     from embher.embedding.capture.h5_writer import ForwardH5Writer, StackedH5Writer  # noqa: F401
     from embher.embedding.attribution import capture_layers, donors  # noqa: F401
+
+
+def test_dataset_module_imports():
+    # dataset imports utils.borzoi_utils (torch, borzoi_pytorch): needs the capture-borzoi extra
+    pytest.importorskip("torch")
+    pytest.importorskip("borzoi_pytorch")
     from embher.embedding import dataset as PersonalDataset  # noqa: F401
