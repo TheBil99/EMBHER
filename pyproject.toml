@@ -11,7 +11,7 @@ license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
     {name = "Miquel Anglada-Girotto"},
-    {name = "Xinming Tu"},
+    {name = "Federico Billeci"},
 ]
 # Core = both parts' basic tools: heritability (numpy, pandas, scipy) and the embedding
 # tools that need no model (whitening, gene metadata, regions/reductions, HDF5 reading and
