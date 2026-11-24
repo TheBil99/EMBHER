@@ -10,14 +10,14 @@ Two parts, installable separately:
 ## Install
 
 ```bash
-pip install "embher @ git+ssh://git@github.com/TheBil99/EMBHER.git"                         # heritability + embedding tools
-pip install "embher[capture-borzoi] @ git+ssh://git@github.com/TheBil99/EMBHER.git"         # + Borzoi/Flashzoi capture
-pip install "embher[capture-enformer] @ git+ssh://git@github.com/TheBil99/EMBHER.git"        # + Enformer embeddings
-pip install "embher[attribution] @ git+ssh://git@github.com/TheBil99/EMBHER.git"            # + attribution (implies capture-borzoi)
-pip install "embher[capture-alphagenome] @ git+ssh://git@github.com/TheBil99/EMBHER.git"    # + AlphaGenome capture
+pip install "embher @ git+https://github.com/TheBil99/EMBHER.git"                         # heritability + embedding tools
+pip install "embher[capture-borzoi] @ git+https://github.com/TheBil99/EMBHER.git"         # + Borzoi/Flashzoi capture
+pip install "embher[capture-enformer] @ git+https://github.com/TheBil99/EMBHER.git"        # + Enformer embeddings
+pip install "embher[attribution] @ git+https://github.com/TheBil99/EMBHER.git"            # + attribution (implies capture-borzoi)
+pip install "embher[capture-alphagenome] @ git+https://github.com/TheBil99/EMBHER.git"    # + AlphaGenome capture
 ```
 
-Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[capture-borzoi,attribution]`.
+Append `@<tag>` or `@<commit>` (full SHA) to the URL to pin a release. Extras combine, e.g. `embher[capture-borzoi,attribution]`. Every dependency of the base install, `capture-borzoi`, `capture-enformer` and `attribution` is on PyPI; `capture-alphagenome` also needs a manual step (below).
 
 | Install | Adds |
 |---|---|
@@ -29,7 +29,13 @@ Append `@<tag>` to the URL to pin a release. Extras combine, e.g. `embher[captur
 | `embher[all]` | `capture-borzoi`, `capture-enformer`, `attribution` and `dev` (not AlphaGenome) |
 | `embher[dev]` | pytest, pytest-cov |
 
-Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
+**AlphaGenome.** `alphagenome_research` is not on PyPI. After `pip install "embher[capture-alphagenome] @ git+https://github.com/TheBil99/EMBHER.git"`, install it from GitHub in the same environment, together with the jax stack it needs:
+
+```bash
+pip install "git+https://github.com/google-deepmind/alphagenome_research.git" jax dm-haiku orbax-checkpoint jmp
+```
+
+(use a CUDA build of jax if you have a GPU; see the jax installation guide). Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
 
 ## Example
 

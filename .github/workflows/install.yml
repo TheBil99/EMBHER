@@ -1,0 +1,41 @@
+name: install
+
+# Builds clean virtualenvs from this checkout and imports what each extra promises, so an
+# unpublished or unresolvable dependency fails here instead of on a colleague's machine.
+on: [push, pull_request]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        extra: ["", "[capture-borzoi]", "[capture-enformer]", "[attribution]"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install (CPU torch wheels)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu ".${{ matrix.extra }}" pytest
+      - name: Import what the extra provides
+        run: |
+          embher-h2 --help > /dev/null
+          python - <<'PY'
+          import embher
+          from embher.heritability import reml, he
+          extra = "${{ matrix.extra }}"
+          if "borzoi" in extra or "attribution" in extra:
+              import borzoi_pytorch
+          if "enformer" in extra:
+              import enformer_pytorch
+          if "attribution" in extra:
+              import captum, tangermeme, pyBigWig
+              from decima.core.attribution import Attribution
+              from embher.embedding.attribution.attributer import BorzoiAttributer
+          PY
+      - name: Tests (base install only)
+        if: matrix.extra == ''
+        run: python -m pytest -q

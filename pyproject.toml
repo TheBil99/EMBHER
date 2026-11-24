@@ -28,7 +28,9 @@ capture-enformer = ["torch", "enformer-pytorch"]
 # Keep it in its own environment: the jax and torch stacks are disjoint.
 capture-alphagenome = ["alphagenome"]
 # Attribution (Borzoi only)
-attribution = ["embher[capture-borzoi]", "captum", "tangermeme", "decima", "pyBigWig"]
+# decima: only decima.core.attribution.Attribution is used (unchanged from 0.6.2 on). 0.7.1+ sets cuDNN
+# deterministic mode when `decima` is imported; envs that must match the paper's runs use decima==0.7.0.
+attribution = ["embher[capture-borzoi]", "captum", "tangermeme", "decima>=0.6.2", "pyBigWig"]
 dev = ["pytest", "pytest-cov"]
 # Everything except AlphaGenome
 all = ["embher[capture-borzoi,capture-enformer,attribution,dev]"]
