@@ -32,10 +32,12 @@ Append `@<tag>` or `@<commit>` (full SHA) to the URL to pin a release. Extras co
 **AlphaGenome.** `alphagenome_research` is not on PyPI. After `pip install "embher[capture-alphagenome] @ git+https://github.com/TheBil99/EMBHER.git"`, install it from GitHub in the same environment, together with the jax stack it needs:
 
 ```bash
-pip install "git+https://github.com/google-deepmind/alphagenome_research.git" jax dm-haiku orbax-checkpoint jmp
+pip install alphagenome==0.9.0 \
+    "alphagenome_research @ git+https://github.com/google-deepmind/alphagenome_research.git@1e55dcffb98ba26b31e74edc5e9f038f54c0e89d" \
+    "jax[cuda12]==0.7.1" dm-haiku==0.0.16 orbax-checkpoint==0.11.33 jmp==0.0.4
 ```
 
-(use a CUDA build of jax if you have a GPU; see the jax installation guide). Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
+These are the versions of the environment the AlphaGenome capture was run in (Python 3.12). Use `jax==0.7.1` instead of `jax[cuda12]==0.7.1` on a machine without a GPU. Other `alphagenome_research` versions expose the same classes and functions the capture code uses (checked from `v0.1.0` to current `main`), but only this combination has been run. Python >= 3.10. The Borzoi and AlphaGenome backends need disjoint stacks (torch versus jax): keep them in separate environments. Weights are not included: Borzoi/Flashzoi come from HuggingFace unless a local path is given; AlphaGenome needs a local checkpoint.
 
 ## Example
 
