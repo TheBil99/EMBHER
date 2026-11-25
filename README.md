@@ -128,6 +128,6 @@ The framework for loading personal genomes (`GenomeDataset`, `CoordinateTransfor
 
 If you use EMBHER, please cite:
 
-> Federico Billeci, Miquel Anglada-Girotto, Alexander Gusev, Jonathan Frazer & Mafalda Dias. *Sequence-to-function embeddings across individuals capture rare and common variant heritability.* bioRxiv (forthcoming; DOI to be added).
+> Federico Billeci, Miquel Anglada-Girotto, Alexander Gusev, Jonathan Frazer & Mafalda Dias. *Sequence-to-function embeddings across individuals capture rare and common variant heritability.* bioRxiv (2026). [Preprint](https://www.biorxiv.org/content/10.64898/2026.11.23.768687v1)
 
 The full analysis pipeline of the manuscript is at [TheBil99/EMBHER_publication](https://github.com/TheBil99/EMBHER_publication).
